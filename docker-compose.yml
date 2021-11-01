@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  node-server:
+    image: jwt-auth
+    restart: always
+    build: .
+    command: 'node ./build/src/index.js'
+    ports:
+      - '4000:4000'
+    depends_on:
+      - database
+    networks:
+      - node-mongo-app
+  database:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    networks:
+      - node-mongo-app
+    volumes:
+      - mongo-data:/data/db
+networks:
+  node-mongo-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local

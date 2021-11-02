@@ -1,4 +1,6 @@
-# 🚧 JWT Authentication
+# JWT Authentication
+
+> 🚧 User construction
 
 This repository hodls jwt token based authentication server written in typescript using node, express and containerized with docker.
 
@@ -33,7 +35,7 @@ Clone repository.
 https://github.com/nipunravisara/jwt-auth.git
 ```
 
-By default, the Docker will expose port 8080 so change this within the
+By default, the Docker will expose port 4000 so change this within the
 Dockerfile if necessary. When ready, simply use the Dockerfile to
 build the image. This will create the dillinger image and pull in the necessary dependencies.
 

@@ -1,11 +1,13 @@
 import * as yup from 'yup';
 
-export interface LogInSchema {
+export interface SignUpSchema {
+  name: string;
   email: string;
   password: string;
 }
 
-const logInSchema: yup.SchemaOf<LogInSchema> = yup.object().shape({
+const signUpSchema: yup.SchemaOf<SignUpSchema> = yup.object().shape({
+  name: yup.string().required({ message: 'Name is required.' }),
   email: yup
     .string()
     .email({ message: 'Invalid email address.' })
@@ -16,4 +18,4 @@ const logInSchema: yup.SchemaOf<LogInSchema> = yup.object().shape({
     .required({ message: 'Password is required.' }),
 });
 
-export default logInSchema;
+export default signUpSchema;

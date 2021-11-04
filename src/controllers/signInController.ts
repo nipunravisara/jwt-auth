@@ -1,17 +1,15 @@
 import { Request, Response } from 'express';
-import { createUser } from '../services/userService';
+import { signInUser } from '../services/userService';
 
-async function signInController(
-  req: Request,
-  res: Response
-): Promise<Response> {
-  const userData = req.body;
+async function logInController(req: Request, res: Response): Promise<Response> {
+  const userCredentials = req.body;
+
   try {
-    const { id, name, email } = await createUser(userData);
-    return res.status(201).json({ id, name, email });
+    const usr = signInUser(userCredentials);
+    return res.status(201).json(usr);
   } catch (error: any) {
     return res.status(404).json({ message: error.message });
   }
 }
 
-export default signInController;
+export default logInController;

@@ -6,7 +6,7 @@ import signInSchema from './schemas/signInSchema';
 import signUpSchema from './schemas/signUpSchema';
 
 function routes(app: Express): void {
-  app.get('/api', (req: Request, res: Response) =>
+  app.get('/api', (_: Request, res: Response) =>
     res.status(200).send('Hola from server.')
   );
 

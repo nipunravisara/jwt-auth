@@ -7,8 +7,8 @@ async function signInController(
 ): Promise<Response> {
   const userData = req.body;
   try {
-    const { id, name, email } = await createUser(userData);
-    return res.status(201).json({ id, name, email });
+    const { name } = await createUser(userData);
+    return res.status(201).json({ name });
   } catch (error: any) {
     return res.status(404).json({ message: error.message });
   }

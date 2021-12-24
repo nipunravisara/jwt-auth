@@ -7,9 +7,7 @@ export interface UserInput {
 }
 
 export interface UserDocument extends UserInput, Document {
-  name: string;
-  email: string;
-  password: string;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 }

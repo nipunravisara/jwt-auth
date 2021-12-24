@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { LogInSchema } from 'src/schemas/logInSchema';
+import { SignUpSchema } from 'src/schemas/signUpSchema';
 import { SignInSchema } from 'src/schemas/signInSchema';
 import { SchemaOf } from 'yup';
 
-function validateRequest(schema: SchemaOf<SignInSchema | LogInSchema>) {
+function validateRequest(schema: SchemaOf<SignInSchema | SignUpSchema>) {
   return async (
     req: Request,
     res: Response,

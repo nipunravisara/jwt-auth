@@ -1,5 +1,9 @@
 import bcrypt from 'bcrypt';
-import { UserDocument, UserInput } from 'src/types/userType';
+import {
+  CreateUserReturnType,
+  UserDocument,
+  UserInput,
+} from 'src/types/userType';
 import User from '../models/userModel';
 
 // Generate salt and password hash
@@ -12,16 +16,35 @@ export async function generatePasswordHash(password: string): Promise<string> {
 // Create new user
 export async function createUser(
   userData: UserInput
-): Promise<UserDocument | typeof Error> {
+): Promise<CreateUserReturnType<UserDocument>> {
+  const existingUser = User.find({ email: userData.email });
+
+  if (existingUser !== null) {
+    return {
+      success: false,
+      status: 409,
+      data: 'User already exist.',
+    };
+  }
+
   try {
     const hashedPassword = await generatePasswordHash(userData.password);
-
-    return await User.create({
+    const newUser = await User.create({
       ...userData,
       password: hashedPassword,
     });
+
+    return {
+      success: false,
+      status: 400,
+      data: newUser,
+    };
   } catch (error: any) {
-    throw new Error(error);
+    return {
+      success: false,
+      status: 404,
+      data: error,
+    };
   }
 }
 

@@ -1,5 +1,11 @@
 import { Document } from 'mongoose';
 
+export interface CreateUserReturnType<T> {
+  success: boolean;
+  status: number;
+  data: T | string;
+}
+
 export interface UserInput {
   name: string;
   email: string;

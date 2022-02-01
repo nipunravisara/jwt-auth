@@ -7,7 +7,7 @@ import signUpSchema from './schemas/signUpSchema';
 
 function routes(app: Express): void {
   app.get('/api', (_: Request, res: Response) =>
-    res.status(200).send('Hola from server.')
+    res.status(200).send('Hello from server.')
   );
 
   app.post('/api/signup', validateRequest(signUpSchema), signUpController);

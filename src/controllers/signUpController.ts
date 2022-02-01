@@ -6,12 +6,13 @@ async function signInController(
   res: Response
 ): Promise<Response> {
   const userData = req.body;
-  try {
-    const { name } = await createUser(userData);
-    return res.status(201).json({ name });
-  } catch (error: any) {
-    return res.status(404).json({ message: error.message });
+  const response = await createUser(userData);
+
+  if (response.success === true) {
+    return res.status(response.status).json(response.data);
   }
+
+  return res.status(response.status).json(response.data);
 }
 
 export default signInController;

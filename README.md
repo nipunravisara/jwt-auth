@@ -1,7 +1,5 @@
 # JWT Authentication
 
-> 🚧 This project is under construction.
-
 This repository holds jwt token based authentication server written in typescript using node, express and containerized with docker.
 
 ## Tech

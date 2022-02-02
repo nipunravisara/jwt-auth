@@ -18,10 +18,8 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     command: yarn run dev
-    environment:
-      PORT: 4000
-      DATABASE_URL_DEV: mongodb://mongo_database:27017
-      DATABASE_NAME: my_db
+    env_file:
+      - .env
     depends_on:
       - mongo_database
     networks:

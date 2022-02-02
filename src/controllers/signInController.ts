@@ -3,13 +3,13 @@ import { signInUser } from '../services/userService';
 
 async function logInController(req: Request, res: Response): Promise<Response> {
   const userCredentials = req.body;
+  const response = await signInUser(userCredentials);
 
-  try {
-    const usr = signInUser(userCredentials);
-    return res.status(201).json(usr);
-  } catch (error: any) {
-    return res.status(404).json({ message: error.message });
+  if (response.success === true) {
+    return res.status(response.status).json(response);
   }
+
+  return res.status(response.status).json(response);
 }
 
 export default logInController;

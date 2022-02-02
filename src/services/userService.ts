@@ -1,15 +1,20 @@
 import {
-  CreateUserReturnType,
   UserDocument,
-  UserInput,
+  CreateUserInput,
+  LoginUserInput,
+  LoginUserReturnType,
+  ReturnType,
 } from 'src/types/userType';
+import generateJwtToken from '../utils/generateJwtToken';
+
 import User from '../models/userModel';
 import getHashedPassword from '../utils/getHashedPassword';
+import validatePassword from '../utils/validatePassword';
 
 // Create new user
 export async function createUser(
-  userData: UserInput
-): Promise<CreateUserReturnType<Omit<UserDocument, 'password'>>> {
+  userData: CreateUserInput
+): Promise<ReturnType<Omit<UserDocument, 'password'>>> {
   const existingUser = await User.findOne({ email: userData.email });
 
   if (existingUser !== null) {
@@ -44,22 +49,48 @@ export async function createUser(
   }
 }
 
-export async function validateUser(email: string): Promise<boolean> {
-  const user = await User.findOne({ email });
-
-  if (user === null) {
-    return false;
-  }
-  return true;
-}
-
 export async function signInUser(
-  userCredentials: Omit<UserInput, 'name'>
-): Promise<any> {
-  const isValidUser = await validateUser(userCredentials.email);
+  userCredentials: LoginUserInput
+): Promise<ReturnType<LoginUserReturnType>> {
+  const currentUser = await User.findOne({ email: userCredentials.email });
 
-  if (isValidUser) {
-    return 1;
+  if (!currentUser) {
+    return {
+      success: false,
+      status: 401,
+      message:
+        'No account is associate with enterd email, Try creating account.',
+      data: null,
+    };
   }
-  return 0;
+
+  const isPasswordValid = await validatePassword(
+    currentUser,
+    userCredentials.password
+  );
+
+  if (!isPasswordValid) {
+    return {
+      success: false,
+      status: 401,
+      message: 'Invalid password, Try again.',
+      data: null,
+    };
+  }
+
+  const token = generateJwtToken(currentUser);
+
+  const user = {
+    userId: currentUser.id,
+    userName: `${currentUser.firstName} ${currentUser.lastName}`,
+    userEmail: currentUser.email,
+    token,
+  };
+
+  return {
+    success: true,
+    status: 200,
+    message: 'Login success.',
+    data: user,
+  };
 }

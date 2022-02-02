@@ -12,7 +12,7 @@ async function signInController(
     return res.status(response.status).json(response);
   }
 
-  return res.status(response.status).json(response.data);
+  return res.status(response.status).json(response);
 }
 
 export default signInController;

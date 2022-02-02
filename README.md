@@ -5,10 +5,11 @@ This repository holds jwt token based authentication server written in typescrip
 ## Tech
 
 - [NodeJS](https://nodejs.org/en/) - JavaScript runtime environment.
-- [Express](https://expressjs.com/) - Web framework for Node.js
+- [Express](https://expressjs.com/) - Web framework for NodeJS.
 - [Typescript](https://www.typescriptlang.org/) - Strongly typed programming language.
-- [MongoDB](https://www.mongodb.com/) - Document-oriented database
-- [Docker](https://www.docker.com/) - Open source containerization platform
+- [MongoDB](https://www.mongodb.com/) - Document-oriented database.
+- [Docker](https://www.docker.com/) - Open source containerization platform.
+- [Yup](https://github.com/jquense/yup) - Schema validation.
 
 ## Features
 
@@ -24,6 +25,8 @@ In order for the server to start there are few environment variables that needs 
 
 - PORT - Port to run server.
 - DATABASE_URL_DEV - MongoDB Database Connection string.
+- DATABASE - Name of the database.
+- JWT_SECRET_KEY - Jwt secret key.
 
 ## Installation
 
@@ -59,3 +62,4 @@ MIT
 [typescript]: https://www.typescriptlang.org/
 [mongodb]: https://www.mongodb.com/
 [docker]: https://www.docker.com/
+[yup]: https://github.com/jquense/yup

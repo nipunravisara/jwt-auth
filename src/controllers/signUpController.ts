@@ -9,7 +9,7 @@ async function signInController(
   const response = await createUser(userData);
 
   if (response.success === true) {
-    return res.status(response.status).json(response.data);
+    return res.status(response.status).json(response);
   }
 
   return res.status(response.status).json(response.data);

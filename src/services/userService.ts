@@ -1,48 +1,44 @@
-import bcrypt from 'bcrypt';
 import {
   CreateUserReturnType,
   UserDocument,
   UserInput,
 } from 'src/types/userType';
 import User from '../models/userModel';
-
-// Generate salt and password hash
-export async function generatePasswordHash(password: string): Promise<string> {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  return hashedPassword;
-}
+import getHashedPassword from '../utils/getHashedPassword';
 
 // Create new user
 export async function createUser(
   userData: UserInput
-): Promise<CreateUserReturnType<UserDocument>> {
-  const existingUser = User.find({ email: userData.email });
+): Promise<CreateUserReturnType<Omit<UserDocument, 'password'>>> {
+  const existingUser = await User.findOne({ email: userData.email });
 
   if (existingUser !== null) {
     return {
       success: false,
       status: 409,
-      data: 'User already exist.',
+      message: 'User already exist.',
+      data: null,
     };
   }
 
   try {
-    const hashedPassword = await generatePasswordHash(userData.password);
+    const hashedPassword = await getHashedPassword(userData.password);
     const newUser = await User.create({
       ...userData,
       password: hashedPassword,
     });
 
     return {
-      success: false,
-      status: 400,
+      success: true,
+      status: 200,
+      message: 'User created successfully.',
       data: newUser,
     };
   } catch (error: any) {
     return {
       success: false,
       status: 404,
+      message: error.message,
       data: error,
     };
   }

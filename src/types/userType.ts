@@ -3,7 +3,8 @@ import { Document } from 'mongoose';
 export interface CreateUserReturnType<T> {
   success: boolean;
   status: number;
-  data: T | string;
+  message: string;
+  data: T | string | null;
 }
 
 export interface UserInput {

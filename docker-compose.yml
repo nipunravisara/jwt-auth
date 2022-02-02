@@ -9,15 +9,19 @@ services:
       - node-mongo-app
     volumes:
       - mongo_database_data:/data/db
-  node-server:
+  node_server:
     build: .
     restart: always
-    environment:
-      DATABASE_URL_DEV: mongodb://mongo_database:27017
-      DATABASE_NAME: my_db
-    command: 'node ./build/src/index.js'
     ports:
       - '4000:4000'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: yarn run dev
+    environment:
+      PORT: 4000
+      DATABASE_URL_DEV: mongodb://mongo_database:27017
+      DATABASE_NAME: my_db
     depends_on:
       - mongo_database
     networks:

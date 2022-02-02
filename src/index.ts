@@ -9,8 +9,8 @@ const app = express();
 
 app.use(express.json());
 
-app.listen(4000, () => {
+app.listen(process.env.PORT, () => {
   routes(app);
   database();
-  console.log('✅ Server is up and running on port 4000');
+  console.log(`✅ Server is up and running on port ${process.env.PORT}`);
 });

@@ -1,10 +1,9 @@
-FROM node:14.18.1
+FROM node:16-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
-COPY tsconfig.json ./
+COPY yarn.lock ./
 RUN yarn
 COPY . .
-
-RUN yarn run dev
+RUN yarn build
 EXPOSE 8080
-CMD ["node", "./build/src/index.js"]
+CMD ["yarn", "start"]
